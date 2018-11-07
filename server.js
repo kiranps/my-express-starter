@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const passport = require("passport");
 const app = express();
+require("dotenv").load();
 
 const jwtStrategry = require("./strategies/jwt");
 const googleStrategry = require("./strategies/google");
@@ -19,7 +20,7 @@ app.get("/", function(req, res) {
   return res.send("Hello world");
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
   console.log(req.body);
   console.log(username, password);
@@ -27,7 +28,7 @@ app.post("/login", (req, res) => {
     if (password === "pass") {
       const opts = {};
       opts.expiresIn = 5;
-      const secret = process.env.JWT_SECRET;
+      const secret = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ username }, secret, opts);
       return res.status(200).json({
         message: "Auth Passed",
@@ -68,13 +69,12 @@ app.get(
     <body>
     <script>
       console.log(${profileId})
-      window.opener.postMessage({ message: ${profileId}});
+      window.opener.authenticateCallback(${profileId});
       window.close();
     </script>
     </body>
     </html>
     `);
-    // res.redirect("/page2");
   }
 );
 

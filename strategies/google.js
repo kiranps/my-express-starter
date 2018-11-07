@@ -6,7 +6,7 @@ module.exports = new GoogleStrategy(
   {
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/google/callback"
+    callbackURL: "http://localhost:4000/auth/google/callback"
   },
   function(token, tokenSecret, profile, done) {
     //   User.findOrCreate({ googleId: profile.id }, function(err, user) {});
